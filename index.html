@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a0000 25%, #2d0000 50%, #1a0000 75%, #0c0c0c 100%);
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .elegant-heart {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #8B0000, #DC143C);
+            transform: rotate(-45deg);
+            margin: 0 auto 40px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(220, 20, 60, 0.3);
+            animation: gentlePulse 3s ease-in-out infinite;
+        }
+
+        .elegant-heart:before,
+        .elegant-heart:after {
+            content: '';
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #8B0000, #DC143C);
+            border-radius: 50px;
+            position: absolute;
+        }
+
+        .elegant-heart:before {
+            left: 30px;
+        }
+
+        .elegant-heart:after {
+            top: -30px;
+        }
+
+        @keyframes gentlePulse {
+            0%, 100% {
+                transform: rotate(-45deg) scale(1);
+                box-shadow: 0 10px 30px rgba(220, 20, 60, 0.3);
+            }
+            50% {
+                transform: rotate(-45deg) scale(1.05);
+                box-shadow: 0 15px 40px rgba(220, 20, 60, 0.5);
+            }
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 300;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #fff, #DC143C, #fff);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 4s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin: 80px 0;
+        }
+
+        .card {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(220, 20, 60, 0.2);
+            border-radius: 15px;
+            padding: 40px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(220, 20, 60, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(220, 20, 60, 0.5);
+            box-shadow: 0 20px 40px rgba(220, 20, 60, 0.2);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            display: block;
+        }
+
+        .card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #DC143C;
+            font-weight: 400;
+        }
+
+        .card p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .message-section {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(220, 20, 60, 0.3);
+            border-radius: 20px;
+            padding: 60px;
+            text-align: center;
+            margin: 80px 0;
+            position: relative;
+        }
+
+        .message-section h2 {
+            font-size: 2.8rem;
+            margin-bottom: 40px;
+            color: #DC143C;
+            font-weight: 300;
+        }
+
+        .love-message {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.95);
+            max-width: 800px;
+            margin: 0 auto 40px;
+            font-style: italic;
+        }
+
+        .elegant-button {
+            background: linear-gradient(45deg, #8B0000, #DC143C);
+            border: none;
+            border-radius: 30px;
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .elegant-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .elegant-button:hover::before {
+            left: 100%;
+        }
+
+        .elegant-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(220, 20, 60, 0.4);
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-particle {
+            position: absolute;
+            opacity: 0.6;
+            animation: gentleFloat 8s infinite linear;
+        }
+
+        @keyframes gentleFloat {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .photo-frame {
+            width: 200px;
+            height: 200px;
+            border: 3px solid #DC143C;
+            border-radius: 15px;
+            margin: 30px auto;
+            background: linear-gradient(45deg, #1a0000, #2d0000);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            box-shadow: 0 15px 35px rgba(220, 20, 60, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .photo-frame:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(220, 20, 60, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.8rem; }
+            .subtitle { font-size: 1.2rem; }
+            .card, .message-section { padding: 30px 20px; }
+            .content-grid { grid-template-columns: 1fr; }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #DC143C;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: particleFloat 6s infinite linear;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements" id="floatingElements"></div>
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <header>
+            <div class="elegant-heart"></div>
+            <h1>For My Beautiful Love</h1>
+            <p class="subtitle">Something special, just for you</p>
+        </header>
+
+        <div class="content-grid">
+            <div class="card">
+                <span class="card-icon">🌹</span>
+                <h3>Your Elegance</h3>
+                <p>You carry yourself with such grace and beauty. The way you look in your favorite dark colors makes you absolutely stunning - like a work of art come to life.</p>
+            </div>
+            
+            <div class="card">
+                <span class="card-icon">💫</span>
+                <h3>Our Connection</h3>
+                <p>Every conversation we have, every moment we share, feels meaningful and real. You understand me in ways I didn't think were possible.</p>
+            </div>
+            
+            <div class="card">
+                <span class="card-icon">🎭</span>
+                <h3>Your Uniqueness</h3>
+                <p>Your interests, your style, your way of seeing the world - everything about you is fascinating. You're not like anyone else, and that's what makes you incredible.</p>
+            </div>
+        </div>
+
+        <div class="message-section">
+            <h2>From My Heart</h2>
+            <p class="love-message">
+                I wanted to create something special for you - not just another website, but a small piece of the internet that's entirely yours. 
+                You inspire me to be creative, to think differently, and to appreciate beauty in all its forms. 
+                Your intelligence, your style, your humor - every part of you amazes me. 
+                Thank you for being exactly who you are.
+            </p>
+            
+            <div class="photo-frame" onclick="showMessage()">
+                📸
+            </div>
+            
+            <button class="elegant-button" onclick="createEffect()">Something Beautiful</button>
+        </div>
+    </div>
+
+    <script>
+        // Create subtle floating particles
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+            particle.style.animationDelay = Math.random() * 2 + 's';
+            document.getElementById('particles').appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 8000);
+        }
+
+        // Create elegant floating symbols
+        function createFloatingElement() {
+            const symbols = ['🌹', '💫', '🎭'];
+            const element = document.createElement('div');
+            element.className = 'floating-particle';
+            element.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+            element.style.left = Math.random() * 100 + '%';
+            element.style.fontSize = (Math.random() * 15 + 20) + 'px';
+            element.style.color = `rgba(220, 20, 60, ${Math.random() * 0.5 + 0.3})`;
+            element.style.animationDuration = (Math.random() * 6 + 6) + 's';
+            document.getElementById('floatingElements').appendChild(element);
+            
+            setTimeout(() => {
+                element.remove();
+            }, 12000);
+        }
+
+        // Elegant effect creation
+        function createEffect() {
+            const messages = [
+                "Your taste is impeccable ✨",
+                "You have such incredible style 🌹",
+                "Thank you for being you 💫",
+                "You make everything better 🎭"
+            ];
+            
+            // Create multiple floating elements
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    createFloatingElement();
+                    createParticle();
+                }, i * 300);
+            }
+            
+            setTimeout(() => {
+                const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+                alert(randomMessage);
+            }, 1000);
+        }
+
+        // Photo frame message
+        function showMessage() {
+            alert("This space is waiting for a photo of us together 📸❤️");
+            createEffect();
+        }
+
+        // Initialize subtle animations
+        setInterval(createParticle, 800);
+        setInterval(createFloatingElement, 3000);
+
+        // Add some initial elegance
+        setTimeout(() => {
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => createFloatingElement(), i * 1000);
+            }
+        }, 2000);
+    </script>
+</body>
+</html>
