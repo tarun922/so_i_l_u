@@ -313,46 +313,47 @@
                 opacity: 0;
             }
         }
-        .gif-popup {
-    display: none; 
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.7);
-    backdrop-filter: blur(5px);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+        /* Keep your existing styles. Just ensure the popup CSS is included */
+.gif-popup {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(5px);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
-
 .gif-content {
-    position: relative;
-    background: #111;
-    padding: 15px;
-    border-radius: 15px;
-    box-shadow: 0 15px 40px rgba(220,20,60,0.5);
-    animation: fadeIn 0.6s ease;
+  position: relative;
+  background: #111;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0 15px 40px rgba(220,20,60,0.5);
+  animation: fadeIn 0.6s ease;
 }
-
 .gif-content img {
-    max-width: 90vw;
-    max-height: 80vh;
-    border-radius: 10px;
+  max-width: 90vw;
+  max-height: 80vh;
+  border-radius: 10px;
 }
-
 .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 2rem;
-    color: #fff;
-    cursor: pointer;
-    transition: 0.3s;
+  position: absolute;
+  top: 10px; right: 15px;
+  font-size: 2rem;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.close-btn:hover {
+  color: #DC143C;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
 }
 
-.close-btn:hover {
-    color: #DC143C;
-}
 
 @keyframes fadeIn {
     from { opacity: 0; transform: scale(0.9); }
@@ -450,63 +451,72 @@
         }
 
         // Elegant effect creation
-// Elegant effect creation + Show GIF sequence
+// Existing createEffect function thing remains the same
 function createEffect() {
-    const messages = [
-        "Your taste is impeccable ✨",
-        "You have such incredible style 🌹",
-        "Thank you for being you 💫",
-        "You make everything better 🎭"
-    ];
-    
-    // Floating particles
-    for (let i = 0; i < 5; i++) {
-        setTimeout(() => {
-            createFloatingElement();
-            createParticle();
-        }, i * 300);
-    }
-    
-    // After animations, show gif popup
+  const messages = [
+    "Your taste is impeccable ✨",
+    "You have such incredible style 🌹",
+    "Thank you for being you 💫",
+    "You make everything better 🎭"
+  ];
+  
+  for (let i = 0; i < 5; i++) {
     setTimeout(() => {
-        const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-        alert(randomMessage);
-        showGifSequence();
-    }, 1000);
+      createFloatingElement();
+      createParticle();
+    }, i * 300);
+  }
+  
+  setTimeout(() => {
+    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+    alert(randomMessage);
+    showGifSequence();
+  }, 1000);
 }
 
-// Gif sequence
+// Use the provided links (with fallback handling)
 const gifs = [
-  "https://i.pinimg.com/originals/56/f3/9f/56f39fa2284d3e5f2c1e927d0d8e9ec6.gif",
-  "https://i.pinimg.com/originals/b0/9b/eb/b09beb2995ae4c2afc179f1dc93b6519.gif",
-  "https://i.pinimg.com/originals/9d/1a/53/9d1a531e033c3fa0c9e11a93bbff8d3c.gif"
+  "https://cdn.discordapp.com/attachments/1405131633623040131/1408380103246741535/yoo.gif?ex=68a987af&is=68a8362f&hm=eb28b47d1e3afae87a56dfdb03df7554579641ec30c50676c3b5515eb8e535d8",
+  "https://media.tenor.com/FYQB1AfA9pkAAAAe/kiss-making-out.png"
 ];
 
 let gifIndex = 0;
 let gifInterval;
 
 function showGifSequence() {
-    const popup = document.getElementById("gifPopup");
-    const gifImg = document.getElementById("kissGif");
-    popup.style.display = "flex";
+  const popup = document.getElementById("gifPopup");
+  const gifImg = document.getElementById("kissGif");
+  popup.style.display = "flex";
 
-    gifIndex = 0;
-    gifImg.src = gifs[gifIndex];
+  gifIndex = 0;
+  loadGif(gifs[gifIndex], gifImg, () => scheduleNextGif(gifImg));
+}
 
-    // cycle gifs every 4s
-    gifInterval = setInterval(() => {
-        gifIndex++;
-        if (gifIndex >= gifs.length) {
-            clearInterval(gifInterval); // stop at last gif
-        } else {
-            gifImg.src = gifs[gifIndex];
-        }
-    }, 4000);
+function loadGif(src, imgElement, callback) {
+  imgElement.src = src;
+  imgElement.onerror = () => {
+    console.warn("Failed to load GIF:", src); // skip if fails
+    callback();
+  };
+  imgElement.onload = () => {
+    callback();
+  };
+}
+
+function scheduleNextGif(imgElement) {
+  gifInterval = setTimeout(() => {
+    gifIndex++;
+    if (gifIndex < gifs.length) {
+      loadGif(gifs[gifIndex], imgElement, () => scheduleNextGif(imgElement));
+    } else {
+      // all done, stop
+    }
+  }, 4000);
 }
 
 function closeGif() {
-    document.getElementById("gifPopup").style.display = "none";
-    clearInterval(gifInterval);
+  document.getElementById("gifPopup").style.display = "none";
+  clearTimeout(gifInterval);
 }
 
 
