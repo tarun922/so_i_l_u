@@ -408,13 +408,14 @@
             <button class="elegant-button" onclick="createEffect()">Something Beautiful</button>
         </div>
     </div>
-    <!-- Hidden Popup for Anime Kiss Gif -->
+    <!-- Hidden Popup for Anime Kiss Gifs -->
     <div id="gifPopup" class="gif-popup">
       <div class="gif-content">
         <span class="close-btn" onclick="closeGif()">&times;</span>
-        <img src="https://media.tenor.com/NEAexX4GjOQAAAAM/anime-kiss.gif" alt="Anime Kiss">
+        <img id="kissGif" src="" alt="Anime Kiss">
       </div>
     </div>
+
 
     <script>
         // Create subtle floating particles
@@ -449,7 +450,7 @@
         }
 
         // Elegant effect creation
-        // Elegant effect creation + Show GIF
+       
 function createEffect() {
     const messages = [
         "Your taste is impeccable ✨",
@@ -458,7 +459,7 @@ function createEffect() {
         "You make everything better 🎭"
     ];
     
-    // Create multiple floating elements
+    // Floating particles
     for (let i = 0; i < 5; i++) {
         setTimeout(() => {
             createFloatingElement();
@@ -466,20 +467,50 @@ function createEffect() {
         }, i * 300);
     }
     
-    // After animation, show gif popup
+    // After animations, show gif popup
     setTimeout(() => {
         const randomMessage = messages[Math.floor(Math.random() * messages.length)];
         alert(randomMessage);
-
-        // Show popup
-        document.getElementById("gifPopup").style.display = "flex";
+        showGifSequence();
     }, 1000);
 }
 
-// Close Gif
+// Gif sequence
+const gifs = [
+    "https://media.tenor.com/NEAexX4GjOQAAAAM/anime-kiss.gif",
+    "https://media.tenor.com/2roX3uxz_68AAAAM/anime-kiss.gif",
+    "https://media.tenor.com/qxQDOQHk87kAAAAM/cute-kiss.gif"
+];
+
+let gifIndex = 0;
+let gifInterval;
+
+function showGifSequence() {
+    const popup = document.getElementById("gifPopup");
+    const gifImg = document.getElementById("kissGif");
+    popup.style.display = "flex";
+
+    gifIndex = 0;
+    gifImg.src = gifs[gifIndex];
+
+    // cycle gifs every 4s
+    gifInterval = setInterval(() => {
+        gifIndex++;
+        if (gifIndex >= gifs.length) {
+            clearInterval(gifInterval); // stop at last gif
+        } else {
+            gifImg.src = gifs[gifIndex];
+        }
+    }, 4000);
+}
+
 function closeGif() {
     document.getElementById("gifPopup").style.display = "none";
+    clearInterval(gifInterval);
 }
+
+
+
 
 
         // Photo frame message
