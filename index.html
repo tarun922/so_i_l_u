@@ -313,6 +313,52 @@
                 opacity: 0;
             }
         }
+        .gif-popup {
+    display: none; 
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.gif-content {
+    position: relative;
+    background: #111;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 15px 40px rgba(220,20,60,0.5);
+    animation: fadeIn 0.6s ease;
+}
+
+.gif-content img {
+    max-width: 90vw;
+    max-height: 80vh;
+    border-radius: 10px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 2rem;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.close-btn:hover {
+    color: #DC143C;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
     </style>
 </head>
 <body>
@@ -362,6 +408,13 @@
             <button class="elegant-button" onclick="createEffect()">Something Beautiful</button>
         </div>
     </div>
+    <!-- Hidden Popup for Anime Kiss Gif -->
+    <div id="gifPopup" class="gif-popup">
+      <div class="gif-content">
+        <span class="close-btn" onclick="closeGif()">&times;</span>
+        <img src="https://media.tenor.com/NEAexX4GjOQAAAAM/anime-kiss.gif" alt="Anime Kiss">
+      </div>
+    </div>
 
     <script>
         // Create subtle floating particles
@@ -396,27 +449,38 @@
         }
 
         // Elegant effect creation
-        function createEffect() {
-            const messages = [
-                "Your taste is impeccable ✨",
-                "You have such incredible style 🌹",
-                "Thank you for being you 💫",
-                "You make everything better 🎭"
-            ];
-            
-            // Create multiple floating elements
-            for (let i = 0; i < 5; i++) {
-                setTimeout(() => {
-                    createFloatingElement();
-                    createParticle();
-                }, i * 300);
-            }
-            
-            setTimeout(() => {
-                const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-                alert(randomMessage);
-            }, 1000);
-        }
+        // Elegant effect creation + Show GIF
+function createEffect() {
+    const messages = [
+        "Your taste is impeccable ✨",
+        "You have such incredible style 🌹",
+        "Thank you for being you 💫",
+        "You make everything better 🎭"
+    ];
+    
+    // Create multiple floating elements
+    for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+            createFloatingElement();
+            createParticle();
+        }, i * 300);
+    }
+    
+    // After animation, show gif popup
+    setTimeout(() => {
+        const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+        alert(randomMessage);
+
+        // Show popup
+        document.getElementById("gifPopup").style.display = "flex";
+    }, 1000);
+}
+
+// Close Gif
+function closeGif() {
+    document.getElementById("gifPopup").style.display = "none";
+}
+
 
         // Photo frame message
         function showMessage() {
@@ -435,5 +499,6 @@
             }
         }, 2000);
     </script>
+    
 </body>
 </html>
